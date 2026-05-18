@@ -1,0 +1,36 @@
+# ─────────────────────────────────────────────
+#  Blush & Balloons — Nginx SystemD Service File
+#  File: nginx.service
+#  Location on server: /etc/systemd/system/nginx.service
+# ─────────────────────────────────────────────
+
+[Unit]
+Description=Nginx HTTP Server — Blush & Balloons
+Documentation=https://nginx.org/en/docs/
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+
+# ── Paths ───────────────────────────────────────
+PIDFile=/run/nginx.pid
+ExecStartPre=/usr/sbin/nginx -t -q -g 'daemon on; master_process on;'
+ExecStart=/usr/sbin/nginx -g 'daemon on; master_process on;'
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+# ── Restart Policy ──────────────────────────────
+Restart=always
+RestartSec=5s
+
+# ── Process Limits ──────────────────────────────
+LimitNOFILE=65535
+LimitNPROC=65535
+
+# ── Security Hardening ──────────────────────────
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
