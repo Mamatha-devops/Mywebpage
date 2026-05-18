@@ -23,7 +23,7 @@ const fs         = require('fs');
 const path       = require('path');
 
 const app  = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // ── FILE-BASED DATABASE (JSON) ──────────────────────────────────────────────
 const DB_FILE = path.join(__dirname, 'bookings.json');
@@ -174,7 +174,7 @@ app.get('*', (req, res) => {
 
 // ── START ─────────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`\n🌸 Blush & Balloons server running on http://localhost:${PORT}`);
+  console.log(`\n🌸 Blush & Balloons server running on http://blushandballons.roboshope.shop:${PORT}`);
   console.log(`   Bookings stored in: ${DB_FILE}`);
   console.log(`   Press Ctrl+C to stop\n`);
 });
