@@ -150,4 +150,3 @@ app.listen(PORT, () => {
   console.log(`   Bookings stored in: ${DB_FILE}`);
   console.log(`   Press Ctrl+C to stop\n`);
 });
-SERVEREOF
