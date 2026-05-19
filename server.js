@@ -53,30 +53,22 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendNotificationEmail(booking) {
-  // 1. Email to business owner
   await transporter.sendMail({
     from: `"Blush & Balloons Website" <${process.env.EMAIL_USER}>`,
-    to: process.env.OWNER_EMAIL || process.env.EMAIL_USER,
-    subject: `✨ New Booking Enquiry — ${booking.name} [${booking.id}]`,
+    to: process.env.OWNER_EMAIL,
+    subject: `✨ New Booking Enquiry — ${booking.name}`,
     html: `
-      <div style="font-family: Georgia, serif; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #E8A4A4; border-radius: 12px;">
-        <h2 style="color:#9B3A52; font-size:1.6rem; margin-bottom:4px;">New Booking Enquiry</h2>
-        <p style="color:#7A5A5A; font-size:0.85rem; margin-top:0;">Ref: <strong>${booking.id}</strong> · Received: ${new Date(booking.submitted_at).toLocaleString('en-IN')}</p>
-        <hr style="border:none; border-top:1px solid #F5D5D5; margin:16px 0;" />
-        <table style="width:100%; border-collapse:collapse; font-size:0.92rem;">
-          <tr><td style="padding:8px 0; color:#7A5A5A; width:40%;">👤 Name</td><td style="padding:8px 0; font-weight:600;">${booking.name}</td></tr>
-          <tr><td style="padding:8px 0; color:#7A5A5A;">📞 Phone</td><td style="padding:8px 0;">${booking.phone}</td></tr>
-          <tr><td style="padding:8px 0; color:#7A5A5A;">📧 Email</td><td style="padding:8px 0;">${booking.email || '—'}</td></tr>
-          <tr><td style="padding:8px 0; color:#7A5A5A;">📅 Event Date</td><td style="padding:8px 0;">${booking.event_date}</td></tr>
-          <tr><td style="padding:8px 0; color:#7A5A5A;">🎉 Event Type</td><td style="padding:8px 0;">${booking.event_type || '—'}</td></tr>
-          <tr><td style="padding:8px 0; color:#7A5A5A;">💎 Service</td><td style="padding:8px 0; color:#9B3A52; font-weight:600;">${booking.service}</td></tr>
-        </table>
-        ${booking.message ? `<div style="background:#FAF5EE; border-radius:8px; padding:12px 16px; margin-top:12px;"><p style="color:#7A5A5A; font-size:0.82rem; margin:0 0 4px;">Message:</p><p style="margin:0; font-style:italic;">${booking.message}</p></div>` : ''}
-        <p style="margin-top:20px; font-size:0.82rem; color:#7A5A5A;">Reply directly to this email or call the client to confirm.</p>
-      </div>
-    `,
-    replyTo: booking.email || undefined,
+      <h2>New Booking!</h2>
+      <p>Name: ${booking.name}</p>
+      <p>Phone: ${booking.phone}</p>
+      <p>Email: ${booking.email}</p>
+      <p>Event Date: ${booking.event_date}</p>
+      <p>Service: ${booking.service}</p>
+      <p>Event Type: ${booking.event_type}</p>
+      <p>Message: ${booking.message}</p>
+    `
   });
+}
 
   // 2. Confirmation email to client
   if (booking.email) {
