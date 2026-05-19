@@ -1,5 +1,5 @@
 
-require('details.env').config();
+require('dotenv').config({ path: './details.env' });
 const express    = require('express');
 const cors       = require('cors');
 const helmet     = require('helmet');
